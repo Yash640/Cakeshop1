@@ -40,9 +40,9 @@ export default function RootLayout({
       <body className={`${playfair.variable} ${inter.variable} ${dancing.variable}`} suppressHydrationWarning={true}>
         <Navbar />
         {children}
-        <Analytics />
         <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <Analytics />
       </body>
     </html>
   );
