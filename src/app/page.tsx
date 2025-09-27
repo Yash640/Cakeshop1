@@ -408,7 +408,7 @@ export default function Home() {
               <h3 className="fw-bold mb-2">Developer Yash Andhale </h3>
             </div>
             <div className="col-lg-6 text-lg-end">
-              <a id="order" className="btn btn-primary btn-lg" href="#">Order on WhatsApp</a>
+              <a id="order" className="btn btn-primary btn-lg" href="https://wa.me/917558392001" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
             </div>
           </div>
         </div>
@@ -443,7 +443,7 @@ export default function Home() {
                       <i className="fab fa-facebook"></i>
                       <span>Facebook</span>
                     </a>
-                    <a href="#" className="social-link whatsapp">
+                    <a href="https://wa.me/917558392001" target="_blank" rel="noopener noreferrer" className="social-link whatsapp">
                       <i className="fab fa-whatsapp"></i>
                       <span>WhatsApp</span>
                     </a>
