@@ -183,8 +183,18 @@ $enable-dark-mode: true;
     height: 100%;
 }
 
+.cake-image-section .text-center {
+    position: relative;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 20px;
+    padding: 30px 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
 .cake-bg-1 {
-    background: #2c1810; // Fallback color
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%),
         url('https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1936&q=80');
     background-size: cover;
@@ -242,23 +252,29 @@ $enable-dark-mode: true;
 }
 
 .overlay-dark {
-    background: linear-gradient(45deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%);
 }
 
 .overlay-title {
     font-family: var(--font-playfair);
     font-weight: 700;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.9), 0 0 20px rgba(0, 0, 0, 0.5);
     animation: fadeInUp 0.8s ease-out;
     letter-spacing: -0.02em;
+    color: #ffffff !important;
+    font-size: 3.5rem;
+    line-height: 1.2;
 }
 
 .overlay-subtitle {
     font-family: var(--font-inter);
-    font-weight: 400;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    font-weight: 500;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 15px rgba(0, 0, 0, 0.5);
     animation: fadeInUp 0.8s ease-out 0.2s both;
     letter-spacing: 0.01em;
+    color: #ffffff !important;
+    font-size: 1.25rem;
+    line-height: 1.4;
 }
 
 // Animations
@@ -351,18 +367,157 @@ $enable-dark-mode: true;
     letter-spacing: 0.2px;
 }
 
-// Enhanced button styling
+// Enhanced button styling with glow effects
 .btn {
     font-family: var(--font-inter);
     font-weight: 500;
     letter-spacing: 0.02em;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    border-radius: 12px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4), 0 0 20px rgba(214, 51, 132, 0.3);
+}
+
+.btn:active {
+    transform: translateY(-1px) scale(0.98);
+}
+
+// Primary button glow effect
+.btn-primary {
+    background: linear-gradient(135deg, #d63384 0%, #e83e8c 50%, #f06292 100%);
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #e83e8c 0%, #f06292 50%, #f48fb1 100%);
+    box-shadow: 0 8px 30px rgba(214, 51, 132, 0.5), 0 0 25px rgba(214, 51, 132, 0.4);
+}
+
+// Light button glow effect
+.btn-light {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #d63384;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+}
+
+.btn-light:hover {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #c2185b;
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.5), 0 0 25px rgba(255, 255, 255, 0.4);
+}
+
+// Outline light button glow effect
+.btn-outline-light {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+.btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 1);
+    color: white;
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4), 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+// WhatsApp button special glow
+.btn[href*="wa.me"] {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 50%, #075e54 100%);
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.btn[href*="wa.me"]:hover {
+    background: linear-gradient(135deg, #128c7e 0%, #075e54 50%, #25d366 100%);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5), 0 0 25px rgba(37, 211, 102, 0.4);
+}
+
+// Social link buttons glow
+.social-link {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    padding: 12px 20px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.social-link:hover::before {
+    left: 100%;
+}
+
+.social-link:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(214, 51, 132, 0.4), 0 0 20px rgba(214, 51, 132, 0.3);
+}
+
+// Instagram social link
+.social-link.instagram {
+    background: linear-gradient(135deg, #e4405f 0%, #c13584 50%, #833ab4 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(228, 64, 95, 0.3);
+}
+
+.social-link.instagram:hover {
+    box-shadow: 0 8px 30px rgba(228, 64, 95, 0.5), 0 0 25px rgba(228, 64, 95, 0.4);
+}
+
+// Facebook social link
+.social-link.facebook {
+    background: linear-gradient(135deg, #1877f2 0%, #0d47a1 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+}
+
+.social-link.facebook:hover {
+    box-shadow: 0 8px 30px rgba(24, 119, 242, 0.5), 0 0 25px rgba(24, 119, 242, 0.4);
+}
+
+// WhatsApp social link
+.social-link.whatsapp {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+}
+
+.social-link.whatsapp:hover {
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5), 0 0 25px rgba(37, 211, 102, 0.4);
 }
 
 // Enhanced Black Dark Theme
@@ -451,4 +606,192 @@ body {
 // Utility classes
 .min-vh-75 {
     min-height: 75vh;
+}
+
+// Image Gallery Slider Styles
+.cake-gallery-item {
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.cake-bg-1 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+        url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k=');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.8s ease;
+    transform-origin: center center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.cake-bg-2 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+        url('https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.8s ease;
+    transform-origin: center center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.cake-bg-3 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+        url('https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1987&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.8s ease;
+    transform-origin: center center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.cake-bg-4 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+        url('https://images.unsplash.com/photo-1606312619070-d48b4c652a52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1987&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.8s ease;
+    transform-origin: center center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.cake-bg-5 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.6) 100%),
+        url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1989&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.8s ease;
+    transform-origin: center center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+// Carousel customizations
+.carousel {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-indicators {
+    bottom: 20px;
+    z-index: 10;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.carousel-indicators .active {
+    background-color: #d63384;
+    border-color: #d63384;
+    transform: scale(1.2);
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background: rgba(214, 51, 132, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 24px;
+    height: 24px;
+}
+
+// Gallery section title styling
+.bg-dark .text-center h2 {
+    font-family: var(--font-playfair);
+    font-weight: 700;
+    font-size: 3rem;
+    background: linear-gradient(135deg, #d63384 0%, #e83e8c 50%, #f8f9fa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.bg-dark .text-center p.lead {
+    font-family: var(--font-inter);
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: rgba(248, 249, 250, 0.9);
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+// Responsive adjustments for gallery
+@media (max-width: 768px) {
+    .cake-gallery-item {
+        min-height: 350px;
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .carousel-control-prev {
+        left: 10px;
+    }
+    
+    .carousel-control-next {
+        right: 10px;
+    }
+    
+    #cakeCarousel + .text-center h2 {
+        font-size: 2.5rem;
+    }
 }

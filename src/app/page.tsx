@@ -1,4 +1,43 @@
+import ImageGallery from '@/components/ImageGallery';
+
 export default function Home() {
+  const galleryImages = [
+    {
+      src: '/images/cake1.jpg',
+      alt: 'Luxury Chocolate Delight',
+      title: 'Luxury Chocolate Delight',
+      description: 'Rich chocolate cake with gold accents and premium decorations',
+      fallbackClass: 'cake-bg-1'
+    },
+    {
+      src: '/images/cake2.jpg',
+      alt: 'Oreo Birthday Special',
+      title: 'Oreo Birthday Special',
+      description: 'Creamy Oreo cake with chocolate crumbs and birthday celebration',
+      fallbackClass: 'cake-bg-2'
+    },
+    {
+      src: '/images/cake3.jpg',
+      alt: 'Almond Chocolate Masterpiece',
+      title: 'Almond Chocolate Masterpiece',
+      description: 'Chocolate cake with almond coating and elegant birthday topper',
+      fallbackClass: 'cake-bg-3'
+    },
+    {
+      src: '/images/cake4.jpg',
+      alt: 'Golden Luxury Box',
+      title: 'Golden Luxury Box',
+      description: 'Premium chocolate cake with gold leaf and glitter decorations',
+      fallbackClass: 'cake-bg-4'
+    },
+    {
+      src: '/images/cake5.jpg',
+      alt: 'Two-Tier Delight',
+      title: 'Two-Tier Delight',
+      description: 'Elegant two-tier cake with chocolate drizzle and almond coating',
+      fallbackClass: 'cake-bg-5'
+    }
+  ];
   return (
     <main>
       {/* Hero Section with Image Overlay */}
@@ -269,7 +308,7 @@ export default function Home() {
                 </div>
                 <div className="card-body p-4">
                   <div className="row g-2">
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Coffee</h6>
@@ -277,7 +316,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Chocolate</h6>
@@ -285,7 +324,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Red Velvet</h6>
@@ -293,7 +332,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 65</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Pineapple</h6>
@@ -301,7 +340,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 65</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Oreo</h6>
@@ -309,7 +348,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 85</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Cookies Cream</h6>
@@ -317,7 +356,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 95</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Peanut Butter</h6>
@@ -325,7 +364,7 @@ export default function Home() {
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
                       </div>
                     </div>
-                    <div className="col-6">
+                    <div className="col-12">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Hazelnut</h6>
@@ -401,11 +440,32 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* Image Gallery Slider */}
+      <section className="py-5 bg-dark">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="display-5 fw-bold mb-3 text-white">Our Delicious Creations</h2>
+            <p className="lead text-light">See the magic we create in our kitchen</p>
+          </div>
+          
+          <ImageGallery images={galleryImages} />
+          
+          <div className="text-center mt-4">
+            <a href="https://wa.me/917558392001" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">
+              <i className="fab fa-whatsapp me-2"></i>
+              Order Your Custom Cake
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Developer and Order Section */}
       <section id="contact" className="py-5 bg-body-tertiary">
         <div className="container">
           <div className="row g-4 align-items-center">
             <div className="col-lg-6">
-              <h3 className="fw-bold mb-2">Developer Yash Andhale </h3>
+              <h3 className="fw-bold mb-2 text-white">Developer Yash Andhale</h3>
             </div>
             <div className="col-lg-6 text-lg-end">
               <a id="order" className="btn btn-primary btn-lg" href="https://wa.me/917558392001" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
@@ -487,19 +547,19 @@ export default function Home() {
                 <div className="contact-info">
                   <div className="contact-item mb-3">
                     <i className="fas fa-map-marker-alt text-warning me-2"></i>
-                    <span className="text-light">Your City, State 12345</span>
+                    <span className="text-light">Airoli , Navi Mumbai </span>
                   </div>
                   <div className="contact-item mb-3">
                     <i className="fas fa-phone text-warning me-2"></i>
-                    <span className="text-light">+91 98765 43210</span>
+                    <span className="text-light">+91 7558392001</span>
                   </div>
                   <div className="contact-item mb-3">
                     <i className="fas fa-envelope text-warning me-2"></i>
-                    <span className="text-light">info@sweetdreamsbakery.com</span>
+                    <span className="text-light">ManasviDhokale@gmail.com</span>
                   </div>
                   <div className="contact-item mb-3">
                     <i className="fas fa-clock text-warning me-2"></i>
-                    <span className="text-light">Mon-Sun: 8:00 AM - 10:00 PM</span>
+                    <span className="text-light">Mon-Sun: 9:00 AM - 6:00 PM</span>
                   </div>
                 </div>
               </div>
