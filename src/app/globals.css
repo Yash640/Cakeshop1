@@ -40,3 +40,80 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Footer Styles */
+.footer-section {
+  margin-bottom: 2rem;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.footer-links a:hover {
+  color: #ffc107 !important;
+  transform: translateX(5px);
+}
+
+.social-links .social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.social-link.instagram {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
+.social-link.facebook {
+  background: linear-gradient(45deg, #3b5998, #4c70ba);
+}
+
+.social-link.whatsapp {
+  background: linear-gradient(45deg, #25d366, #128c7e);
+}
+
+.social-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  color: white !important;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+  transform: translateX(5px);
+}
+
+.contact-item i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Footer responsive adjustments */
+@media (max-width: 768px) {
+  .social-links .d-flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .social-link {
+    justify-content: center;
+  }
+}

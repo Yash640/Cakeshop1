@@ -413,6 +413,115 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Beautiful Footer */}
+      <footer className="bg-dark text-white py-5">
+        <div className="container">
+          <div className="row g-4">
+            {/* About Section */}
+            <div className="col-lg-4 col-md-6">
+              <div className="footer-section">
+                <h4 className="fw-bold mb-3 text-warning">
+                  <span className="me-2">🍰</span>
+                  Sweet Dreams Bakery
+                </h4>
+                <p className="text-light mb-3">
+                  Where every bite tells a story of passion, creativity, and love. 
+                  We craft the finest cakes and desserts to make your special moments unforgettable.
+                </p>
+                <div className="social-links">
+                  <h6 className="text-warning mb-3">Follow Us</h6>
+                  <div className="d-flex gap-3">
+                    <a href="https://www.instagram.com/_.happy_crumbs._" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       className="social-link instagram">
+                      <i className="fab fa-instagram"></i>
+                      <span>Instagram</span>
+                    </a>
+                    <a href="#" className="social-link facebook">
+                      <i className="fab fa-facebook"></i>
+                      <span>Facebook</span>
+                    </a>
+                    <a href="#" className="social-link whatsapp">
+                      <i className="fab fa-whatsapp"></i>
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Links */}
+            <div className="col-lg-2 col-md-6">
+              <div className="footer-section">
+                <h5 className="fw-bold mb-3 text-warning">Quick Links</h5>
+                <ul className="list-unstyled footer-links">
+                  <li><a href="#menu" className="text-light text-decoration-none">Our Menu</a></li>
+                  <li><a href="#order" className="text-light text-decoration-none">Order Now</a></li>
+                  <li><a href="#contact" className="text-light text-decoration-none">Contact Us</a></li>
+                  <li><a href="#" className="text-light text-decoration-none">About Us</a></li>
+                  <li><a href="#" className="text-light text-decoration-none">Gallery</a></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div className="col-lg-3 col-md-6">
+              <div className="footer-section">
+                <h5 className="fw-bold mb-3 text-warning">Our Specialties</h5>
+                <ul className="list-unstyled footer-links">
+                  <li><a href="#" className="text-light text-decoration-none">Chocolate Cakes</a></li>
+                  <li><a href="#" className="text-light text-decoration-none">Wedding Cakes</a></li>
+                  <li><a href="#" className="text-light text-decoration-none">Birthday Cakes</a></li>
+                  <li><a href="#" className="text-light text-decoration-none">Cupcakes</a></li>
+                  <li><a href="#" className="text-light text-decoration-none">Custom Orders</a></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div className="col-lg-3 col-md-6">
+              <div className="footer-section">
+                <h5 className="fw-bold mb-3 text-warning">Get In Touch</h5>
+                <div className="contact-info">
+                  <div className="contact-item mb-3">
+                    <i className="fas fa-map-marker-alt text-warning me-2"></i>
+                    <span className="text-light">Your City, State 12345</span>
+                  </div>
+                  <div className="contact-item mb-3">
+                    <i className="fas fa-phone text-warning me-2"></i>
+                    <span className="text-light">+91 98765 43210</span>
+                  </div>
+                  <div className="contact-item mb-3">
+                    <i className="fas fa-envelope text-warning me-2"></i>
+                    <span className="text-light">info@sweetdreamsbakery.com</span>
+                  </div>
+                  <div className="contact-item mb-3">
+                    <i className="fas fa-clock text-warning me-2"></i>
+                    <span className="text-light">Mon-Sun: 8:00 AM - 10:00 PM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <hr className="my-4 border-secondary" />
+          <div className="row align-items-center">
+            <div className="col-md-6">
+              <p className="mb-0 text-light">
+                © 2024 Sweet Dreams Bakery. All rights reserved.
+              </p>
+            </div>
+            <div className="col-md-6 text-md-end">
+              <p className="mb-0 text-light">
+                Made with <span className="text-danger">❤️</span> by <span className="text-warning">Yash Andhale</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
       </main>
   );
 }
