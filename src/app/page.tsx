@@ -312,7 +312,7 @@ export default function Home() {
                     <div className="col-6">
                       <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
-                          <h6 className="mb-0 fw-semibold small">Cookies & Cream</h6>
+                          <h6 className="mb-0 fw-semibold small">Cookies Cream</h6>
                         </div>
                         <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 95</span>
                       </div>
