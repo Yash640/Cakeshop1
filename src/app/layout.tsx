@@ -4,6 +4,7 @@ import "./globals.css";
 import "../styles/custom.scss";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -35,7 +36,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-bs-theme="dark">
-      <body className={`${playfair.variable} ${inter.variable} ${dancing.variable}`}>
+      <body className={`${playfair.variable} ${inter.variable} ${dancing.variable}`} suppressHydrationWarning={true}>
         <Navbar />
         {children}
         <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" strategy="afterInteractive" />
