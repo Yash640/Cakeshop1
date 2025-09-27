@@ -1,6 +1,26 @@
+'use client';
+
 import ImageGallery from '@/components/ImageGallery';
+import OrderModal from '@/components/OrderModal';
+import { useState } from 'react';
 
 export default function Home() {
+  const [selectedItem, setSelectedItem] = useState<{
+    name: string;
+    price: string;
+    description?: string;
+  } | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleItemClick = (name: string, price: string, description?: string) => {
+    setSelectedItem({ name, price, description });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
   const galleryImages = [
     {
       src: '/images/cake1.jpg',
@@ -146,7 +166,11 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Black Forest', '₹ 400', 'Classic chocolate with cherries')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Black Forest</h6>
                           <small className="text-muted">Classic chocolate with cherries</small>
@@ -155,7 +179,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Chocolate Chip', '₹ 550', 'Rich chocolate with chips')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate Chip</h6>
                           <small className="text-muted">Rich chocolate with chips</small>
@@ -164,7 +192,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Oreo Cake', '₹ 550', 'Creamy oreo delight')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Oreo</h6>
                           <small className="text-muted">Creamy oreo delight</small>
@@ -173,7 +205,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Chocolate Truffle Cake', '₹ 600', 'Decadent truffle experience')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate Truffle</h6>
                           <small className="text-muted">Decadent truffle experience</small>
@@ -182,7 +218,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Nutella Truffle Cake', '₹ 650', 'Hazelnut chocolate perfection')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Nutella Truffle</h6>
                           <small className="text-muted">Hazelnut chocolate perfection</small>
@@ -191,7 +231,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Ferrero Rocher Cake', '₹ 650', 'Premium hazelnut luxury')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Ferrero Rocher</h6>
                           <small className="text-muted">Premium hazelnut luxury</small>
@@ -216,7 +260,11 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Pineapple Cake', '₹ 500', 'Tropical pineapple delight')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Pineapple</h6>
                           <small className="text-muted">Tropical pineapple delight</small>
@@ -225,7 +273,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Rasmalai Cake', '₹ 600', 'Traditional Indian dessert')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Rasmalai</h6>
                           <small className="text-muted">Traditional Indian dessert</small>
@@ -234,7 +286,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Red Velvet Cake', '₹ 600', 'Classic red velvet elegance')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Red Velvet</h6>
                           <small className="text-muted">Classic red velvet elegance</small>
@@ -258,7 +314,11 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Classic Cake Bowl', '₹ 200', 'Simple and delicious')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Classic Bowl</h6>
                           <small className="text-muted">Simple and delicious</small>
@@ -267,7 +327,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Triple Chocolate Bowl', '₹ 210', 'Three layers of chocolate')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Triple Chocolate Bowl</h6>
                           <small className="text-muted">Three layers of chocolate</small>
@@ -276,7 +340,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Nutella Cake Bowl', '₹ 230', 'Hazelnut spread heaven')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Nutella Bowl</h6>
                           <small className="text-muted">Hazelnut spread heaven</small>
@@ -285,7 +353,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('KitKat Cake Bowl', '₹ 300', 'Crunchy kitkat surprise')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">KitKat Bowl</h6>
                           <small className="text-muted">Crunchy kitkat surprise</small>
@@ -309,7 +381,11 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-2">
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Coffee Cupcake', '₹ 100')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Coffee</h6>
                         </div>
@@ -317,7 +393,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Chocolate Cupcake', '₹ 100')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Chocolate</h6>
                         </div>
@@ -325,7 +405,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Red Velvet Cupcake', '₹ 65')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Red Velvet</h6>
                         </div>
@@ -333,7 +417,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Pineapple Cupcake', '₹ 65')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Pineapple</h6>
                         </div>
@@ -341,7 +429,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Oreo Cupcake', '₹ 85')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Oreo</h6>
                         </div>
@@ -349,7 +441,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Cookies Cream Cupcake', '₹ 95')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Cookies Cream</h6>
                         </div>
@@ -357,7 +453,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Peanut Butter Cupcake', '₹ 100')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Peanut Butter</h6>
                         </div>
@@ -365,7 +465,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Hazelnut Cupcake', '₹ 120')}
+                      >
                         <div>
                           <h6 className="mb-0 fw-semibold small">Hazelnut</h6>
                         </div>
@@ -388,7 +492,11 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Dark Chocolate Brownie', '₹ 90', 'Rich and intense')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Dark Chocolate</h6>
                           <small className="text-muted">Rich and intense</small>
@@ -397,7 +505,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Chocolate Chip Brownie', '₹ 90', 'Classic with chips')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate Chip</h6>
                           <small className="text-muted">Classic with chips</small>
@@ -406,7 +518,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Almond Fudge Brownie', '₹ 100', 'Nutty fudge delight')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Almond Fudge</h6>
                           <small className="text-muted">Nutty fudge delight</small>
@@ -415,7 +531,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Walnut Peanut Brownie', '₹ 100', 'Crunchy nut combination')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Walnut Peanut</h6>
                           <small className="text-muted">Crunchy nut combination</small>
@@ -424,7 +544,11 @@ export default function Home() {
                       </div>
                     </div>
                     <div className="col-12">
-                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Butter Brownie', '₹ 100', 'Rich buttery goodness')}
+                      >
                         <div>
                           <h6 className="mb-1 fw-semibold">Butter</h6>
                           <small className="text-muted">Rich buttery goodness</small>
@@ -582,6 +706,17 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Order Modal */}
+      {selectedItem && (
+        <OrderModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          itemName={selectedItem.name}
+          itemPrice={selectedItem.price}
+          itemDescription={selectedItem.description}
+        />
+      )}
       </main>
   );
 }
