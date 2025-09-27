@@ -5,6 +5,7 @@ import "../styles/custom.scss";
 import Script from "next/script";
 import Navbar from "@/components/Navbar";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
