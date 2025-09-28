@@ -560,6 +560,125 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            <div className="col-lg-6">
+              <div className="card h-100 border-0 shadow-lg category-card overflow-hidden">
+                <div className="card-header bg-gradient-success text-white py-3">
+                  <h4 className="card-title mb-0 d-flex align-items-center">
+                    <span className="me-2">🍮</span>
+                    Glass Cake
+                  </h4>
+                </div>
+                <div className="card-body p-4">
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Chocolate Glass Cake', '₹ 120', 'Classic chocolate glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Chocolate</h6>
+                          <small className="text-muted">Classic chocolate glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 120</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Coffee Glass Cake', '₹ 140', 'Rich coffee glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Coffee</h6>
+                          <small className="text-muted">Rich coffee glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Oreo Glass Cake', '₹ 140', 'Creamy oreo glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Oreo</h6>
+                          <small className="text-muted">Creamy oreo glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Pineapple Glass Cake', '₹ 140', 'Tropical pineapple glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Pineapple</h6>
+                          <small className="text-muted">Tropical pineapple glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Kit-Kat Glass Cake', '₹ 150', 'Crunchy kit-kat glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Kit-Kat</h6>
+                          <small className="text-muted">Crunchy kit-kat glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 150</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Triple Choco Glass Cake', '₹ 150', 'Triple chocolate glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Triple Choco</h6>
+                          <small className="text-muted">Triple chocolate glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 150</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Rasmalai Glass Cake', '₹ 160', 'Traditional rasmalai glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Rasmalai</h6>
+                          <small className="text-muted">Traditional rasmalai glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div 
+                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => handleItemClick('Red Velvet Glass Cake', '₹ 160', 'Classic red velvet glass cake')}
+                      >
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Red Velvet</h6>
+                          <small className="text-muted">Classic red velvet glass cake</small>
+                        </div>
+                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
