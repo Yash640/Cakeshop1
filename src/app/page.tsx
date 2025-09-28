@@ -11,6 +11,14 @@ export default function Home() {
     description?: string;
   } | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [cart, setCart] = useState<Array<{
+    id: string;
+    name: string;
+    price: number;
+    description?: string;
+    quantity: number;
+  }>>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleItemClick = (name: string, price: string, description?: string) => {
     setSelectedItem({ name, price, description });
@@ -20,6 +28,104 @@ export default function Home() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedItem(null);
+  };
+
+  const addToCart = (name: string, price: string, description?: string) => {
+    const priceNumber = parseInt(price.replace('₹ ', ''));
+    const existingItem = cart.find(item => item.name === name);
+    
+    if (existingItem) {
+      setCart(cart.map(item => 
+        item.name === name 
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ));
+    } else {
+      setCart([...cart, {
+        id: Date.now().toString(),
+        name,
+        price: priceNumber,
+        description,
+        quantity: 1
+      }]);
+    }
+  };
+
+  const removeFromCart = (id: string) => {
+    setCart(cart.filter(item => item.id !== id));
+  };
+
+  const updateQuantity = (id: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(id);
+    } else {
+      setCart(cart.map(item => 
+        item.id === id 
+          ? { ...item, quantity }
+          : item
+      ));
+    }
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
+
+  const getCartTotal = () => {
+    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+  };
+
+  const getCartItemCount = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const generateWhatsAppMessage = () => {
+    const orderItems = cart.map(item => 
+      `${item.name} x${item.quantity} - ₹${item.price * item.quantity}`
+    ).join('\n');
+    
+    const total = getCartTotal();
+    const message = `Hi! I would like to place an order:\n\n${orderItems}\n\nTotal: ₹${total}\n\nPlease confirm availability and delivery details.`;
+    
+    return encodeURIComponent(message);
+  };
+
+  const renderQuantityButton = (name: string, price: string, description: string, cardColor: string) => {
+    const cartItem = cart.find(item => item.name === name);
+    
+    if (cartItem) {
+      return (
+        <div className="d-flex align-items-center gap-2">
+          <button 
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => updateQuantity(cartItem.id, cartItem.quantity - 1)}
+            style={{borderColor: cardColor, color: cardColor}}
+          >
+            <i className="fas fa-minus"></i>
+          </button>
+          <span className="fw-semibold" style={{color: cardColor, minWidth: '20px', textAlign: 'center'}}>
+            {cartItem.quantity}
+          </span>
+          <button 
+            className="btn btn-sm btn-outline-secondary"
+            onClick={() => updateQuantity(cartItem.id, cartItem.quantity + 1)}
+            style={{borderColor: cardColor, color: cardColor}}
+          >
+            <i className="fas fa-plus"></i>
+          </button>
+        </div>
+      );
+    } else {
+      return (
+        <button 
+          className="btn btn-sm"
+          onClick={() => addToCart(name, price, description)}
+          style={{backgroundColor: cardColor, borderColor: cardColor, color: 'white'}}
+        >
+          <i className="fas fa-plus me-1"></i>Add
+        </button>
+      );
+    }
   };
   const galleryImages = [
     {
@@ -77,6 +183,18 @@ export default function Home() {
               <div className="d-flex gap-3 justify-content-center flex-wrap">
                 <a href="#menu" className="btn btn-light btn-lg px-4 py-3">Explore Menu</a>
                 <a href="#order" className="btn btn-outline-light btn-lg px-4 py-3">Order Now</a>
+                <button 
+                  className="btn btn-warning btn-lg px-4 py-3 position-relative"
+                  onClick={() => setIsCartOpen(true)}
+                >
+                  <i className="fas fa-shopping-cart me-2"></i>
+                  Cart
+                  {getCartItemCount() > 0 && (
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {getCartItemCount()}
+                    </span>
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -166,81 +284,75 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Black Forest', '₹ 400', 'Classic chocolate with cherries')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Black Forest</h6>
                           <small className="text-muted">Classic chocolate with cherries</small>
                         </div>
-                        <span className="price-badge">₹ 400</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 400</span>
+                          {renderQuantityButton('Black Forest', '₹ 400', 'Classic chocolate with cherries', '#e91e63')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Chocolate Chip', '₹ 550', 'Rich chocolate with chips')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate Chip</h6>
                           <small className="text-muted">Rich chocolate with chips</small>
                         </div>
-                        <span className="price-badge">₹ 550</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 550</span>
+                          {renderQuantityButton('Chocolate Chip', '₹ 550', 'Rich chocolate with chips', '#e91e63')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Oreo Cake', '₹ 550', 'Creamy oreo delight')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Oreo</h6>
                           <small className="text-muted">Creamy oreo delight</small>
                         </div>
-                        <span className="price-badge">₹ 550</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 550</span>
+                          {renderQuantityButton('Oreo Cake', '₹ 550', 'Creamy oreo delight', '#e91e63')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Chocolate Truffle Cake', '₹ 600', 'Decadent truffle experience')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate Truffle</h6>
                           <small className="text-muted">Decadent truffle experience</small>
                         </div>
-                        <span className="price-badge">₹ 600</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 600</span>
+                          {renderQuantityButton('Chocolate Truffle Cake', '₹ 600', 'Decadent truffle experience', '#e91e63')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Nutella Truffle Cake', '₹ 650', 'Hazelnut chocolate perfection')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Nutella Truffle</h6>
                           <small className="text-muted">Hazelnut chocolate perfection</small>
                         </div>
-                        <span className="price-badge">₹ 650</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 650</span>
+                          {renderQuantityButton('Nutella Truffle Cake', '₹ 650', 'Hazelnut chocolate perfection', '#e91e63')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Ferrero Rocher Cake', '₹ 650', 'Premium hazelnut luxury')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Ferrero Rocher</h6>
                           <small className="text-muted">Premium hazelnut luxury</small>
                         </div>
-                        <span className="price-badge">₹ 650</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 650</span>
+                          {renderQuantityButton('Ferrero Rocher Cake', '₹ 650', 'Premium hazelnut luxury', '#e91e63')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -260,42 +372,39 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Pineapple Cake', '₹ 500', 'Tropical pineapple delight')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Pineapple</h6>
                           <small className="text-muted">Tropical pineapple delight</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>₹ 500</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>₹ 500</span>
+                          {renderQuantityButton('Pineapple Cake', '₹ 500', 'Tropical pineapple delight', '#10b981')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Rasmalai Cake', '₹ 600', 'Traditional Indian dessert')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Rasmalai</h6>
                           <small className="text-muted">Traditional Indian dessert</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>₹ 600</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>₹ 600</span>
+                          {renderQuantityButton('Rasmalai Cake', '₹ 600', 'Traditional Indian dessert', '#10b981')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Red Velvet Cake', '₹ 600', 'Classic red velvet elegance')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Red Velvet</h6>
                           <small className="text-muted">Classic red velvet elegance</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>₹ 600</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)'}}>₹ 600</span>
+                          {renderQuantityButton('Red Velvet Cake', '₹ 600', 'Classic red velvet elegance', '#10b981')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -314,55 +423,51 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Classic Cake Bowl', '₹ 200', 'Simple and delicious')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Classic Bowl</h6>
                           <small className="text-muted">Simple and delicious</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 200</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 200</span>
+                          {renderQuantityButton('Classic Cake Bowl', '₹ 200', 'Simple and delicious', '#f59e0b')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Triple Chocolate Bowl', '₹ 210', 'Three layers of chocolate')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Triple Chocolate Bowl</h6>
                           <small className="text-muted">Three layers of chocolate</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 210</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 210</span>
+                          {renderQuantityButton('Triple Chocolate Bowl', '₹ 210', 'Three layers of chocolate', '#f59e0b')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Nutella Cake Bowl', '₹ 230', 'Hazelnut spread heaven')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Nutella Bowl</h6>
                           <small className="text-muted">Hazelnut spread heaven</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 230</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 230</span>
+                          {renderQuantityButton('Nutella Cake Bowl', '₹ 230', 'Hazelnut spread heaven', '#f59e0b')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('KitKat Cake Bowl', '₹ 300', 'Crunchy kitkat surprise')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">KitKat Bowl</h6>
                           <small className="text-muted">Crunchy kitkat surprise</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 300</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 300</span>
+                          {renderQuantityButton('KitKat Cake Bowl', '₹ 300', 'Crunchy kitkat surprise', '#f59e0b')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -381,99 +486,91 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-2">
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Coffee Cupcake', '₹ 100')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Coffee</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
+                          {renderQuantityButton('Coffee Cupcake', '₹ 100', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Chocolate Cupcake', '₹ 100')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Chocolate</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
+                          {renderQuantityButton('Chocolate Cupcake', '₹ 100', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Red Velvet Cupcake', '₹ 65')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Red Velvet</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 65</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 65</span>
+                          {renderQuantityButton('Red Velvet Cupcake', '₹ 65', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Pineapple Cupcake', '₹ 65')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Pineapple</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 65</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 65</span>
+                          {renderQuantityButton('Pineapple Cupcake', '₹ 65', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Oreo Cupcake', '₹ 85')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Oreo</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 85</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 85</span>
+                          {renderQuantityButton('Oreo Cupcake', '₹ 85', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Cookies Cream Cupcake', '₹ 95')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Cookies Cream</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 95</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 95</span>
+                          {renderQuantityButton('Cookies Cream Cupcake', '₹ 95', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Peanut Butter Cupcake', '₹ 100')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Peanut Butter</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 100</span>
+                          {renderQuantityButton('Peanut Butter Cupcake', '₹ 100', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Hazelnut Cupcake', '₹ 120')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-0 fw-semibold small">Hazelnut</h6>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 120</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)', fontSize: '0.8rem', padding: '6px 12px'}}>₹ 120</span>
+                          {renderQuantityButton('Hazelnut Cupcake', '₹ 120', '', '#0ea5e9')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -492,68 +589,63 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Dark Chocolate Brownie', '₹ 90', 'Rich and intense')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Dark Chocolate</h6>
                           <small className="text-muted">Rich and intense</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 90</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 90</span>
+                          {renderQuantityButton('Dark Chocolate Brownie', '₹ 90', 'Rich and intense', '#ef4444')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Chocolate Chip Brownie', '₹ 90', 'Classic with chips')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate Chip</h6>
                           <small className="text-muted">Classic with chips</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 90</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 90</span>
+                          {renderQuantityButton('Chocolate Chip Brownie', '₹ 90', 'Classic with chips', '#ef4444')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Almond Fudge Brownie', '₹ 100', 'Nutty fudge delight')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Almond Fudge</h6>
                           <small className="text-muted">Nutty fudge delight</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 100</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 100</span>
+                          {renderQuantityButton('Almond Fudge Brownie', '₹ 100', 'Nutty fudge delight', '#ef4444')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Walnut Peanut Brownie', '₹ 100', 'Crunchy nut combination')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Walnut Peanut</h6>
                           <small className="text-muted">Crunchy nut combination</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 100</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 100</span>
+                          {renderQuantityButton('Walnut Peanut Brownie', '₹ 100', 'Crunchy nut combination', '#ef4444')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Butter Brownie', '₹ 100', 'Rich buttery goodness')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Butter</h6>
                           <small className="text-muted">Rich buttery goodness</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 100</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'}}>₹ 100</span>
+                          {renderQuantityButton('Butter Brownie', '₹ 100', 'Rich buttery goodness', '#ef4444')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -572,107 +664,99 @@ export default function Home() {
                 <div className="card-body p-4">
                   <div className="row g-3">
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Chocolate Glass Cake', '₹ 120', 'Classic chocolate glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Chocolate</h6>
                           <small className="text-muted">Classic chocolate glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 120</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 120</span>
+                          {renderQuantityButton('Chocolate Glass Cake', '₹ 120', 'Classic chocolate glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Coffee Glass Cake', '₹ 140', 'Rich coffee glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Coffee</h6>
                           <small className="text-muted">Rich coffee glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                          {renderQuantityButton('Coffee Glass Cake', '₹ 140', 'Rich coffee glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Oreo Glass Cake', '₹ 140', 'Creamy oreo glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Oreo</h6>
                           <small className="text-muted">Creamy oreo glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                          {renderQuantityButton('Oreo Glass Cake', '₹ 140', 'Creamy oreo glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Pineapple Glass Cake', '₹ 140', 'Tropical pineapple glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Pineapple</h6>
                           <small className="text-muted">Tropical pineapple glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                          {renderQuantityButton('Pineapple Glass Cake', '₹ 140', 'Tropical pineapple glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Kit-Kat Glass Cake', '₹ 150', 'Crunchy kit-kat glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Kit-Kat</h6>
                           <small className="text-muted">Crunchy kit-kat glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 150</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 150</span>
+                          {renderQuantityButton('Kit-Kat Glass Cake', '₹ 150', 'Crunchy kit-kat glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Triple Choco Glass Cake', '₹ 150', 'Triple chocolate glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Triple Choco</h6>
                           <small className="text-muted">Triple chocolate glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 150</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 150</span>
+                          {renderQuantityButton('Triple Choco Glass Cake', '₹ 150', 'Triple chocolate glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Rasmalai Glass Cake', '₹ 160', 'Traditional rasmalai glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Rasmalai</h6>
                           <small className="text-muted">Traditional rasmalai glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                          {renderQuantityButton('Rasmalai Glass Cake', '₹ 160', 'Traditional rasmalai glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                     <div className="col-12">
-                      <div 
-                        className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item"
-                        style={{cursor: 'pointer'}}
-                        onClick={() => handleItemClick('Red Velvet Glass Cake', '₹ 160', 'Classic red velvet glass cake')}
-                      >
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
                         <div>
                           <h6 className="mb-1 fw-semibold">Red Velvet</h6>
                           <small className="text-muted">Classic red velvet glass cake</small>
                         </div>
-                        <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                          {renderQuantityButton('Red Velvet Glass Cake', '₹ 160', 'Classic red velvet glass cake', '#04c224')}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -835,6 +919,139 @@ export default function Home() {
           itemPrice={selectedItem.price}
           itemDescription={selectedItem.description}
         />
+      )}
+
+      {/* Cart Modal */}
+      {isCartOpen && (
+        <div className="modal show d-block" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+          <div className="modal-dialog modal-lg">
+            <div className="modal-content">
+              <div className="modal-header bg-primary text-white">
+                <h5 className="modal-title">
+                  <i className="fas fa-shopping-cart me-2"></i>
+                  Shopping Cart ({getCartItemCount()} items)
+                </h5>
+                <button 
+                  type="button" 
+                  className="btn-close btn-close-white" 
+                  onClick={() => setIsCartOpen(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                {cart.length === 0 ? (
+                  <div className="text-center py-5">
+                    <i className="fas fa-shopping-cart fa-3x text-muted mb-3"></i>
+                    <h5 className="text-muted">Your cart is empty</h5>
+                    <p className="text-muted">Add some delicious items to get started!</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="row g-3">
+                      {cart.map((item) => (
+                        <div key={item.id} className="col-12">
+                          <div className="card border-0 shadow-sm">
+                            <div className="card-body p-3">
+                              <div className="row align-items-center">
+                                <div className="col-md-6">
+                                  <h6 className="mb-1 fw-semibold">{item.name}</h6>
+                                  {item.description && (
+                                    <small className="text-muted">{item.description}</small>
+                                  )}
+                                </div>
+                                <div className="col-md-3">
+                                  <div className="d-flex align-items-center gap-2">
+                                    <button 
+                                      className="btn btn-sm btn-outline-secondary"
+                                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                    >
+                                      <i className="fas fa-minus"></i>
+                                    </button>
+                                    <span className="fw-semibold">{item.quantity}</span>
+                                    <button 
+                                      className="btn btn-sm btn-outline-secondary"
+                                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                    >
+                                      <i className="fas fa-plus"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                                <div className="col-md-2 text-end">
+                                  <span className="fw-semibold text-primary">
+                                    ₹{item.price * item.quantity}
+                                  </span>
+                                </div>
+                                <div className="col-md-1 text-end">
+                                  <button 
+                                    className="btn btn-sm btn-outline-danger"
+                                    onClick={() => removeFromCart(item.id)}
+                                  >
+                                    <i className="fas fa-trash"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    
+                    <div className="mt-4 p-3 bg-light rounded">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <h5 className="mb-0">Total: ₹{getCartTotal()}</h5>
+                        <div className="d-flex gap-2">
+                          <button 
+                            className="btn btn-outline-danger"
+                            onClick={clearCart}
+                          >
+                            <i className="fas fa-trash me-1"></i>Clear Cart
+                          </button>
+                          <a 
+                            href={`https://wa.me/917558392001?text=${generateWhatsAppMessage()}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-success"
+                          >
+                            <i className="fab fa-whatsapp me-1"></i>Order Now
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Cart Button */}
+      {cart.length > 0 && (
+        <div 
+          className="position-fixed"
+          style={{
+            bottom: '20px',
+            right: '20px',
+            zIndex: 1000
+          }}
+        >
+          <button
+            className="btn btn-warning rounded-circle shadow-lg position-relative"
+            style={{
+              width: '60px',
+              height: '60px',
+              fontSize: '1.5rem'
+            }}
+            onClick={() => setIsCartOpen(true)}
+          >
+            <i className="fas fa-shopping-cart"></i>
+            <span 
+              className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+              style={{fontSize: '0.7rem'}}
+            >
+              {getCartItemCount()}
+            </span>
+          </button>
+        </div>
       )}
       </main>
   );
