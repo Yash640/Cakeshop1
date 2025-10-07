@@ -19,6 +19,7 @@ export default function Home() {
     quantity: number;
   }>>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isUpiOpen, setIsUpiOpen] = useState(false);
 
   const handleItemClick = (name: string, price: string, description?: string) => {
     setSelectedItem({ name, price, description });
@@ -88,6 +89,43 @@ export default function Home() {
     const message = `Hi! I would like to place an order:\n\n${orderItems}\n\nTotal: ₹${total}\n\nPlease confirm availability and delivery details.`;
     
     return encodeURIComponent(message);
+  };
+
+  const upiVpa = 'manasvidhokale-1@oksbi';
+  const upiPayeeName = 'Manasvi Dhokale';
+  const upiNote = 'Sweet Dreams Order';
+
+  const buildUpiLink = () => {
+    const amount = getCartTotal();
+    const params = new URLSearchParams({
+      pa: upiVpa, // VPA
+      pn: upiPayeeName,
+      tn: upiNote,
+      am: amount.toString(),
+      cu: 'INR'
+    });
+    return `upi://pay?${params.toString()}`;
+  };
+
+  const qrSrc = () => {
+    const link = buildUpiLink();
+    return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(link)}&size=240x240`;
+  };
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert('Copied to clipboard');
+    } catch {
+      // Fallback
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      alert('Copied to clipboard');
+    }
   };
 
   const renderQuantityButton = (name: string, price: string, description: string, cardColor: string) => {
@@ -1304,11 +1342,63 @@ export default function Home() {
                           >
                             <i className="fab fa-whatsapp me-1"></i>Order Now
                           </a>
+                          <button
+                            className="btn btn-primary"
+                            onClick={() => setIsUpiOpen(true)}
+                          >
+                            <i className="fas fa-qrcode me-1"></i>Pay via UPI
+                          </button>
                         </div>
                       </div>
                     </div>
                   </>
                 )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* UPI Modal */}
+      {isUpiOpen && (
+        <div className="modal show d-block upi-modal" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+          <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-content glass upi-modal-content">
+              <div className="modal-header bg-gradient-success text-white upi-modal-header">
+                <h5 className="modal-title">
+                  <i className="fas fa-qrcode me-2"></i>
+                  Pay via UPI
+                </h5>
+                <button 
+                  type="button" 
+                  className="btn-close btn-close-white" 
+                  onClick={() => setIsUpiOpen(false)}
+                ></button>
+              </div>
+              <div className="modal-body upi-modal-body">
+                <div className="text-center">
+                  <div className="upi-qr-frame mx-auto">
+                    <img src={qrSrc()} alt="UPI QR" width={240} height={240} className="upi-qr" />
+                  </div>
+                  <div className="mt-3">
+                    <div className="d-inline-flex align-items-center gap-2 p-2 rounded bg-dark border border-secondary upi-id-chip">
+                      <span className="text-light small">UPI ID:</span>
+                      <strong className="text-white">{upiVpa}</strong>
+                      <button className="btn btn-sm btn-outline-light" onClick={() => copyToClipboard(upiVpa)}>
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-3 d-flex justify-content-center gap-2 flex-wrap upi-actions">
+                    <span className="price-badge">₹ {getCartTotal()}</span>
+                    <button className="btn btn-sm btn-outline-light" onClick={() => copyToClipboard(getCartTotal().toString())}><i className="far fa-copy me-1"></i>Copy Amount</button>
+                    <a href={buildUpiLink()} className="btn btn-primary" rel="noopener noreferrer"><i className="fas fa-external-link-alt me-1"></i>Open UPI App</a>
+                  </div>
+                  <p className="text-muted small mt-3">Note: {upiNote}</p>
+                </div>
+              </div>
+              <div className="modal-footer upi-modal-footer">
+                <button className="btn btn-outline-light" onClick={() => setIsUpiOpen(false)}>Close</button>
               </div>
             </div>
           </div>

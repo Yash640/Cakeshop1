@@ -635,6 +635,61 @@ $enable-dark-mode: true;
     }
 }
 
+// UPI modal tweaks
+.upi-modal .modal-dialog {
+    max-width: 480px;
+}
+
+.upi-modal .modal-content {
+    border-radius: 16px !important;
+}
+
+.upi-modal-content {
+    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.55);
+}
+
+.upi-modal-header {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.upi-modal-body {
+    padding-top: 1.75rem !important;
+}
+
+.upi-qr-frame {
+    padding: 14px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    width: fit-content;
+}
+
+.upi-qr {
+    display: block;
+    border-radius: 12px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+.upi-id-chip {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.upi-actions .btn,
+.upi-actions .price-badge {
+    border-radius: 12px !important;
+}
+
+.upi-modal-footer {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 576px) {
+    .upi-qr-frame { padding: 10px; }
+    .upi-actions .btn { padding: 8px 12px; }
+}
+
 // Social link buttons glow
 .social-link {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
