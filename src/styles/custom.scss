@@ -680,6 +680,16 @@ $enable-dark-mode: true;
     border-radius: 12px !important;
 }
 
+.upi-actions .upi-app {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    color: #111827;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.upi-actions .upi-app.gpay { color: #0f9d58; }
+.upi-actions .upi-app.phonepe { color: #5f259f; }
+.upi-actions .upi-app.paytm { color: #00baf2; }
+
 .upi-modal-footer {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.03) 100%);
     border-top: 1px solid rgba(255, 255, 255, 0.12);

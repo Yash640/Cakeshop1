@@ -112,6 +112,12 @@ export default function Home() {
     return `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(link)}&size=240x240`;
   };
 
+  const appIntentLink = (packageName: string) => {
+    const upi = encodeURIComponent(buildUpiLink());
+    // Android intent URL; on non-Android it will just use the href target if supported
+    return `intent://${upi.replace('upi%3A%2F%2Fpay%3F', 'pay%3F')}#Intent;scheme=upi;package=${packageName};end`;
+  };
+
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -1392,7 +1398,10 @@ export default function Home() {
                   <div className="mt-3 d-flex justify-content-center gap-2 flex-wrap upi-actions">
                     <span className="price-badge">₹ {getCartTotal()}</span>
                     <button className="btn btn-sm btn-outline-light" onClick={() => copyToClipboard(getCartTotal().toString())}><i className="far fa-copy me-1"></i>Copy Amount</button>
-                    <a href={buildUpiLink()} className="btn btn-primary" rel="noopener noreferrer"><i className="fas fa-external-link-alt me-1"></i>Open UPI App</a>
+                    <a href={buildUpiLink()} className="btn btn-primary" rel="noopener noreferrer"><i className="fas fa-external-link-alt me-1"></i>Open Any UPI</a>
+                    <a href={appIntentLink('com.google.android.apps.nbu.paisa.user')} className="btn btn-light upi-app gpay" rel="noopener noreferrer"><i className="fab fa-google me-1"></i>GPay</a>
+                    <a href={appIntentLink('com.phonepe.app')} className="btn btn-light upi-app phonepe" rel="noopener noreferrer">PhonePe</a>
+                    <a href={appIntentLink('net.one97.paytm')} className="btn btn-light upi-app paytm" rel="noopener noreferrer">Paytm</a>
                   </div>
                   <p className="text-muted small mt-3">Note: {upiNote}</p>
                 </div>
