@@ -118,6 +118,11 @@ export default function Home() {
     return `intent://${upi.replace('upi%3A%2F%2Fpay%3F', 'pay%3F')}#Intent;scheme=upi;package=${packageName};end`;
   };
 
+  const isIOS = () => {
+    if (typeof navigator === 'undefined') return false;
+    return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+  };
+
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -1399,9 +1404,9 @@ export default function Home() {
                     <span className="price-badge">₹ {getCartTotal()}</span>
                     <button className="btn btn-sm btn-outline-light" onClick={() => copyToClipboard(getCartTotal().toString())}><i className="far fa-copy me-1"></i>Copy Amount</button>
                     <a href={buildUpiLink()} className="btn btn-primary" rel="noopener noreferrer"><i className="fas fa-external-link-alt me-1"></i>Open Any UPI</a>
-                    <a href={appIntentLink('com.google.android.apps.nbu.paisa.user')} className="btn btn-light upi-app gpay" rel="noopener noreferrer"><i className="fab fa-google me-1"></i>GPay</a>
-                    <a href={appIntentLink('com.phonepe.app')} className="btn btn-light upi-app phonepe" rel="noopener noreferrer">PhonePe</a>
-                    <a href={appIntentLink('net.one97.paytm')} className="btn btn-light upi-app paytm" rel="noopener noreferrer">Paytm</a>
+                    <a href={isIOS() ? buildUpiLink() : appIntentLink('com.google.android.apps.nbu.paisa.user')} className="btn btn-light upi-app gpay" rel="noopener noreferrer"><i className="fab fa-google me-1"></i>GPay</a>
+                    <a href={isIOS() ? buildUpiLink() : appIntentLink('com.phonepe.app')} className="btn btn-light upi-app phonepe" rel="noopener noreferrer">PhonePe</a>
+                    <a href={isIOS() ? buildUpiLink() : appIntentLink('net.one97.paytm')} className="btn btn-light upi-app paytm" rel="noopener noreferrer">Paytm</a>
                   </div>
                   <p className="text-muted small mt-3">Note: {upiNote}</p>
                 </div>
