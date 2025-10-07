@@ -182,7 +182,7 @@ export default function Home() {
               </p>
               <div className="d-flex gap-3 justify-content-center flex-wrap">
                 <a href="#menu" className="btn btn-light btn-lg px-4 py-3">Explore Menu</a>
-                <a href="#stall-products" className="btn btn-outline-light btn-lg px-4 py-3">Stall Products</a>
+                <a href="#stall-products" className="btn btn-lg px-4 py-3 btn-stall-highlight">🔥 Stall Products</a>
                 <a href="#order" className="btn btn-outline-light btn-lg px-4 py-3">Order Now</a>
                 <button 
                   className="btn btn-warning btn-lg px-4 py-3 position-relative"

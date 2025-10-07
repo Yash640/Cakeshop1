@@ -69,12 +69,13 @@ $enable-dark-mode: true;
 // Enhanced menu item styling
 .menu-item {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 12px;
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(20, 20, 20, 0.4) 100%) !important;
     backdrop-filter: blur(10px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
 }
 
 .menu-item::before {
@@ -94,9 +95,43 @@ $enable-dark-mode: true;
 
 .menu-item:hover {
     background: linear-gradient(135deg, rgba(214, 51, 132, 0.2) 0%, rgba(214, 51, 132, 0.1) 100%) !important;
-    border-color: rgba(214, 51, 132, 0.3);
+    border-color: rgba(214, 51, 132, 0.35);
     transform: translateX(6px) translateY(-2px);
     box-shadow: 0 8px 25px rgba(214, 51, 132, 0.25);
+}
+
+// Controls inside menu item (Add / +/- / quantity)
+.menu-item .d-flex.align-items-center.gap-2 .btn-sm {
+    border-radius: 10px !important;
+    padding: 6px 10px !important;
+    line-height: 1 !important;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.04);
+    border-width: 2px !important;
+}
+
+.menu-item .d-flex.align-items-center.gap-2 .btn-sm:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(214, 51, 132, 0.25);
+}
+
+.menu-item .d-flex.align-items-center.gap-2 span.fw-semibold {
+    display: inline-block;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    min-width: 28px;
+    text-align: center;
+}
+
+// Better layout breathing room
+.menu-item > div:first-child h6 {
+    margin-bottom: 2px;
+}
+
+.menu-item > div:first-child small {
+    opacity: 0.9;
 }
 
 // Price badge enhancements
@@ -106,7 +141,7 @@ $enable-dark-mode: true;
     letter-spacing: 0.5px;
     font-size: 0.95rem;
     padding: 8px 16px;
-    border-radius: 20px;
+    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     background: linear-gradient(135deg, #d63384 0%, #e83e8c 100%);
     color: white;
@@ -114,6 +149,20 @@ $enable-dark-mode: true;
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease;
+}
+
+// Make price badge and add buttons the same visual height
+.menu-item .price-badge,
+.menu-item .d-flex.align-items-center.gap-2 .btn-sm {
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-item .d-flex.align-items-center.gap-2 .btn-sm {
+    font-size: 0.95rem;
+    padding: 0 14px !important; // equalize width without changing height
 }
 
 .price-badge::before {
@@ -316,6 +365,56 @@ $enable-dark-mode: true;
     }
 }
 
+// Tight mobile layout for menu rows
+@media (max-width: 576px) {
+    .menu-item {
+        flex-direction: column !important; // stack name and controls
+        align-items: stretch !important;
+        gap: 10px;
+        padding: 12px !important;
+    }
+
+    .menu-item > .d-flex {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 8px;
+    }
+
+    .price-badge {
+        font-size: 0.85rem;
+        padding: 0 12px; // keep height fixed via explicit height below
+        border-radius: 10px;
+        height: 32px; // match buttons on mobile
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .menu-item .d-flex.align-items-center.gap-2 .btn-sm {
+        padding: 0 12px !important;
+        border-width: 1.5px !important;
+        height: 32px; // match badge height on mobile
+    }
+
+    .menu-item .d-flex.align-items-center.gap-2 span.fw-semibold {
+        min-width: 24px;
+        padding: 5px 9px;
+        font-size: 0.9rem;
+    }
+}
+
+// Ultra small devices tweaks
+@media (max-width: 380px) {
+    .price-badge {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+
+    .menu-item .d-flex.align-items-center.gap-2 {
+        gap: 6px !important;
+    }
+}
+
 // Enhanced Typography
 .navbar-brand {
     font-family: var(--font-playfair);
@@ -441,6 +540,34 @@ $enable-dark-mode: true;
     border-color: rgba(255, 255, 255, 1);
     color: white;
     box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4), 0 0 25px rgba(255, 255, 255, 0.3);
+}
+
+// Special highlight for Stall Products CTA
+.btn-stall-highlight {
+    background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ef4444 100%);
+    color: #000;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    text-shadow: none;
+    position: relative;
+}
+
+.btn-stall-highlight::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.35), rgba(239, 68, 68, 0.35));
+    filter: blur(12px);
+    z-index: -1;
+}
+
+@keyframes subtlePulse {
+    0%, 100% { transform: translateY(0); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.35); }
+    50% { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(239, 68, 68, 0.45); }
+}
+
+.btn-stall-highlight {
+    animation: subtlePulse 2.2s ease-in-out infinite;
 }
 
 // WhatsApp button special glow
