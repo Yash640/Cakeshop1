@@ -182,6 +182,7 @@ export default function Home() {
               </p>
               <div className="d-flex gap-3 justify-content-center flex-wrap">
                 <a href="#menu" className="btn btn-light btn-lg px-4 py-3">Explore Menu</a>
+                <a href="#stall-products" className="btn btn-outline-light btn-lg px-4 py-3">Stall Products</a>
                 <a href="#order" className="btn btn-outline-light btn-lg px-4 py-3">Order Now</a>
                 <button 
                   className="btn btn-warning btn-lg px-4 py-3 position-relative"
@@ -197,6 +198,296 @@ export default function Home() {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Stall Products Section */}
+      <section id="stall-products" className="py-5 bg-body-tertiary">
+        <div className="container">
+          <div className="text-center mb-5">
+            <h2 className="display-5 fw-bold mb-3">Stall Products</h2>
+            <p className="lead text-muted">Items available at our stall</p>
+          </div>
+          <div className="row g-4">
+            <div className="col-lg-6">
+              <div className="card h-100 border-0 shadow-lg category-card overflow-hidden">
+                <div className="card-header bg-gradient-danger text-white py-3">
+                  <h4 className="card-title mb-0 d-flex align-items-center">
+                    <span className="me-2">🍫</span>
+                    Chocolates & Brownies
+                  </h4>
+                </div>
+                <div className="card-body p-4">
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Oreo Chocolate Mousse Shots</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 99</span>
+                          {renderQuantityButton('Oreo Chocolate Mousse Shots', '₹ 99', '', '#ef4444')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Choco Lava Cake</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 120</span>
+                          {renderQuantityButton('Choco Lava Cake', '₹ 120', '', '#ef4444')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Chocolate Chip Brownie</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge">₹ 90</span>
+                          {renderQuantityButton('Chocolate Chip Brownie', '₹ 90', '', '#ef4444')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className="card h-100 border-0 shadow-lg category-card overflow-hidden">
+                <div className="card-header bg-gradient-success text-white py-3">
+                  <h4 className="card-title mb-0 d-flex align-items-center">
+                    <span className="me-2">🍮</span>
+                    Glass Cakes & Pastries
+                  </h4>
+                </div>
+                <div className="card-body p-4">
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Glass Cake (Red Velvet)</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                          {renderQuantityButton('Glass Cake (Red Velvet)', '₹ 160', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Glass Cake (KitKat)</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 160</span>
+                          {renderQuantityButton('Glass Cake (KitKat)', '₹ 160', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Glass Cake (Oreo)</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 140</span>
+                          {renderQuantityButton('Glass Cake (Oreo)', '₹ 140', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Glass Cake (Chocolate)</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 120</span>
+                          {renderQuantityButton('Glass Cake (Chocolate)', '₹ 120', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Red Velvet Pastry</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 180</span>
+                          {renderQuantityButton('Red Velvet Pastry', '₹ 180', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Oreo Chocolate Truffle Pastry</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 180</span>
+                          {renderQuantityButton('Oreo Chocolate Truffle Pastry', '₹ 180', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Cheesecake Pastry</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 210</span>
+                          {renderQuantityButton('Cheesecake Pastry', '₹ 210', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Chocolate Truffle Pastry</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #04c224 0%, #495057 100%)'}}>₹ 180</span>
+                          {renderQuantityButton('Chocolate Truffle Pastry', '₹ 180', '', '#04c224')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className="card h-100 border-0 shadow-lg category-card overflow-hidden">
+                <div className="card-header bg-gradient-info text-white py-3">
+                  <h4 className="card-title mb-0 d-flex align-items-center">
+                    <span className="me-2">🧁</span>
+                    Cupcakes & Bowls
+                  </h4>
+                </div>
+                <div className="card-body p-4">
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Cupcake Pack of 4</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)'}}>₹ 199</span>
+                          {renderQuantityButton('Cupcake Pack of 4', '₹ 199', '', '#0ea5e9')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Cupcake Pack of 6</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)'}}>₹ 299</span>
+                          {renderQuantityButton('Cupcake Pack of 6', '₹ 299', '', '#0ea5e9')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Cake Bowl (Classic)</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)'}}>₹ 200</span>
+                          {renderQuantityButton('Cake Bowl (Classic)', '₹ 200', '', '#0ea5e9')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Cake Bowl (KitKat)</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)'}}>₹ 300</span>
+                          {renderQuantityButton('Cake Bowl (KitKat)', '₹ 300', '', '#0ea5e9')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-lg-6">
+              <div className="card h-100 border-0 shadow-lg category-card overflow-hidden">
+                <div className="card-header bg-gradient-warning text-white py-3">
+                  <h4 className="card-title mb-0 d-flex align-items-center">
+                    <span className="me-2">🍬</span>
+                    Candies & Packs
+                  </h4>
+                </div>
+                <div className="card-body p-4">
+                  <div className="row g-3">
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Dry Fruit Chocolate</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 10</span>
+                          {renderQuantityButton('Dry Fruit Chocolate', '₹ 10', '', '#f59e0b')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Coconut Candy Filling</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 10</span>
+                          {renderQuantityButton('Coconut Candy Filling', '₹ 10', '', '#f59e0b')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Pack of 6 Dry Fruit Chocolates</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 199</span>
+                          {renderQuantityButton('Pack of 6 Dry Fruit Chocolates', '₹ 199', '', '#f59e0b')}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-12">
+                      <div className="d-flex justify-content-between align-items-center p-3 rounded-3 bg-light menu-item">
+                        <div>
+                          <h6 className="mb-1 fw-semibold">Pack of 6 Coconut Candies</h6>
+                        </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <span className="price-badge" style={{background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)', color: '#000'}}>₹ 199</span>
+                          {renderQuantityButton('Pack of 6 Coconut Candies', '₹ 199', '', '#f59e0b')}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <a 
+              href={`https://wa.me/917558392001?text=${generateWhatsAppMessage()}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-success btn-lg"
+            >
+              <i className="fab fa-whatsapp me-2"></i>Order Selected Stall Items
+            </a>
           </div>
         </div>
       </section>
