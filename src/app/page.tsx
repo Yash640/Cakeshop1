@@ -1214,17 +1214,17 @@ export default function Home() {
 
       {/* Cart Modal */}
       {isCartOpen && (
-        <div className="modal show d-block" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
-          <div className="modal-dialog modal-lg">
-            <div className="modal-content">
-              <div className="modal-header bg-primary text-white">
+        <div className="modal show d-block cart-modal" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+          <div className="modal-dialog modal-lg modal-dialog-centered">
+            <div className="modal-content cart-modal-content glass">
+              <div className="modal-header cart-modal-header text-white">
                 <h5 className="modal-title">
                   <i className="fas fa-shopping-cart me-2"></i>
                   Shopping Cart ({getCartItemCount()} items)
                 </h5>
                 <button 
                   type="button" 
-                  className="btn-close btn-close-white" 
+                  className="btn-close btn-close-white cart-close" 
                   onClick={() => setIsCartOpen(false)}
                 ></button>
               </div>
@@ -1240,8 +1240,8 @@ export default function Home() {
                     <div className="row g-3">
                       {cart.map((item) => (
                         <div key={item.id} className="col-12">
-                          <div className="card border-0 shadow-sm">
-                            <div className="card-body p-3">
+                          <div className="card border-0 shadow-sm cart-item">
+                            <div className="card-body p-3 cart-item-body">
                               <div className="row align-items-center">
                                 <div className="col-md-6">
                                   <h6 className="mb-1 fw-semibold">{item.name}</h6>
@@ -1250,7 +1250,7 @@ export default function Home() {
                                   )}
                                 </div>
                                 <div className="col-md-3">
-                                  <div className="d-flex align-items-center gap-2">
+                                  <div className="d-flex align-items-center gap-2 cart-qty">
                                     <button 
                                       className="btn btn-sm btn-outline-secondary"
                                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
@@ -1267,7 +1267,7 @@ export default function Home() {
                                   </div>
                                 </div>
                                 <div className="col-md-2 text-end">
-                                  <span className="fw-semibold text-primary">
+                                  <span className="fw-semibold text-primary cart-item-price">
                                     ₹{item.price * item.quantity}
                                   </span>
                                 </div>
@@ -1286,7 +1286,7 @@ export default function Home() {
                       ))}
                     </div>
                     
-                    <div className="mt-4 p-3 bg-light rounded">
+                    <div className="mt-4 p-3 bg-light rounded cart-summary">
                       <div className="d-flex justify-content-between align-items-center">
                         <h5 className="mb-0">Total: ₹{getCartTotal()}</h5>
                         <div className="d-flex gap-2">
