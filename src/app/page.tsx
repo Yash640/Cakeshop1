@@ -1085,7 +1085,7 @@ export default function Home() {
         <div className="container">
           <div className="row g-4 align-items-center">
             <div className="col-lg-6">
-              <h3 className="fw-bold mb-2 text-white">Developer Yash Andhale</h3>
+              <h3 className="fw-bold mb-2 text-white">Ye 400 wala black forest cake kitne ka haiji ?</h3>
             </div>
             <div className="col-lg-6 text-lg-end">
               <a id="order" className="btn btn-primary btn-lg" href="https://wa.me/917558392001" target="_blank" rel="noopener noreferrer">Order on WhatsApp</a>
