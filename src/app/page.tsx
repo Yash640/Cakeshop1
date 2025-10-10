@@ -19,6 +19,7 @@ export default function Home() {
     quantity: number;
   }>>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [customerName, setCustomerName] = useState('');
 
   const handleItemClick = (name: string, price: string, description?: string) => {
     setSelectedItem({ name, price, description });
@@ -85,7 +86,8 @@ export default function Home() {
     ).join('\n');
     
     const total = getCartTotal();
-    const message = `Hi! I would like to place an order:\n\n${orderItems}\n\nTotal: ₹${total}\n\nPlease confirm availability and delivery details.`;
+    const customerInfo = customerName ? `Customer Name: ${customerName}\n\n` : '';
+    const message = `Hi! I would like to place an order:\n\n${customerInfo}${orderItems}\n\nTotal: ₹${total}\n\nPlease confirm availability and delivery details.`;
     
     return encodeURIComponent(message);
   };
@@ -1289,6 +1291,20 @@ export default function Home() {
                     </div>
                     
                     <div className="mt-4 p-3 bg-light rounded cart-summary">
+                      <div className="mb-3">
+                        <label htmlFor="customerName" className="form-label fw-semibold">
+                          <i className="fas fa-user me-2"></i>Enter Your Name
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="customerName"
+                          placeholder="Your name for the order"
+                          value={customerName}
+                          onChange={(e) => setCustomerName(e.target.value)}
+                          required
+                        />
+                      </div>
                       <div className="d-flex justify-content-between align-items-center">
                         <h5 className="mb-0">Total: ₹{getCartTotal()}</h5>
                         <div className="d-flex gap-2">
@@ -1298,14 +1314,24 @@ export default function Home() {
                           >
                             <i className="fas fa-trash me-1"></i>Clear Cart
                           </button>
-                          <a 
-                            href={`https://wa.me/917558392001?text=${generateWhatsAppMessage()}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-success"
-                          >
-                            <i className="fab fa-whatsapp me-1"></i>Order Now
-                          </a>
+                          {customerName.trim() ? (
+                            <a 
+                              href={`https://wa.me/917558392001?text=${generateWhatsAppMessage()}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-success"
+                            >
+                              <i className="fab fa-whatsapp me-1"></i>Order Now
+                            </a>
+                          ) : (
+                            <button 
+                              className="btn btn-secondary"
+                              disabled
+                              title="Please enter your name first"
+                            >
+                              <i className="fab fa-whatsapp me-1"></i>Order Now
+                            </button>
+                          )}
                           
                         </div>
                       </div>
